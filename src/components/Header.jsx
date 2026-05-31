@@ -1,6 +1,7 @@
 'use client';
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import ThemeToggle from './ThemeToggle';
 
 const ARC_LOGO = 'https://2cleyyjiu4t0uoo0.public.blob.vercel-storage.com/Gradual-Arc-icon-43ee6ca5-45c5-404d-ac1b-f54f93c51f06-1761315436123.png';
 
@@ -51,6 +52,7 @@ export default function Header() {
             <span className="network-badge-dot"></span>
             Arc Testnet
           </div>
+          <ThemeToggle />
           <ConnectButton
             chainStatus="icon"
             accountStatus="address"

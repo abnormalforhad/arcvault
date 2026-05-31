@@ -4,6 +4,7 @@ import { WagmiProvider } from 'wagmi';
 import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { config } from '@/config/wagmi';
+import { NotificationProvider } from './NotificationCenter';
 
 import '@rainbow-me/rainbowkit/styles.css';
 
@@ -30,7 +31,9 @@ export default function Providers({ children }) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider theme={customTheme} modalSize="compact">
-          {children}
+          <NotificationProvider>
+            {children}
+          </NotificationProvider>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

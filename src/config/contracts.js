@@ -173,12 +173,20 @@ export const VAULT_ABI = [
   },
 ];
 
-// Contract addresses — update after deployment
+// ═══════════════════════════════════════════════════
+// ARC Testnet Contract Addresses (VERIFIED)
+// ═══════════════════════════════════════════════════
+//
+// USDC = native gas token, system contract at 0x360...
+//   - ERC-20 interface uses 6 decimals
+//   - Native gas uses 18 decimals
+//   - Always read decimals() from contract
+//
+// EURC = standard ERC-20 on ARC Testnet
+// ═══════════════════════════════════════════════════
 export const CONTRACTS = {
-  // USDC on ARC Testnet (replace with actual address)
-  USDC: '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
-  // EURC on ARC Testnet (replace with actual address)  
-  EURC: '0x08210F9170F89Ab7658F0B5E3fF39b0E03C594D4',
+  USDC: '0x3600000000000000000000000000000000000000',
+  EURC: '0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a',
   // ArcVault — update after deploying contracts/ArcVault.sol
   VAULT: '0x0000000000000000000000000000000000000000',
 };

@@ -8,6 +8,7 @@ import { arcTestnet } from '@/config/wagmi';
 export default function BalanceCard() {
   const { address, isConnected } = useAccount();
 
+  // Read balances AND decimals for each token
   const { data, isLoading } = useReadContracts({
     contracts: [
       {
@@ -18,10 +19,22 @@ export default function BalanceCard() {
         chainId: arcTestnet.id,
       },
       {
+        address: CONTRACTS.USDC,
+        abi: ERC20_ABI,
+        functionName: 'decimals',
+        chainId: arcTestnet.id,
+      },
+      {
         address: CONTRACTS.EURC,
         abi: ERC20_ABI,
         functionName: 'balanceOf',
         args: [address],
+        chainId: arcTestnet.id,
+      },
+      {
+        address: CONTRACTS.EURC,
+        abi: ERC20_ABI,
+        functionName: 'decimals',
         chainId: arcTestnet.id,
       },
     ],
@@ -32,29 +45,31 @@ export default function BalanceCard() {
   });
 
   const usdcBalance = data?.[0]?.result;
-  const eurcBalance = data?.[1]?.result;
+  const usdcDecimals = data?.[1]?.result ?? 6;
+  const eurcBalance = data?.[2]?.result;
+  const eurcDecimals = data?.[3]?.result ?? 6;
 
-  const formatBalance = (balance) => {
+  const formatBalance = (balance, decimals) => {
     if (balance === undefined || balance === null) return '0.00';
-    return parseFloat(formatUnits(balance, 6)).toLocaleString('en-US', {
+    return parseFloat(formatUnits(balance, Number(decimals))).toLocaleString('en-US', {
       minimumFractionDigits: 2,
-      maximumFractionDigits: 6,
+      maximumFractionDigits: 4,
     });
   };
 
   const tokens = [
     {
       symbol: 'USDC',
-      name: 'USD Coin',
       icon: 'usdc',
       balance: usdcBalance,
-      label: '$ Stablecoin',
+      decimals: usdcDecimals,
+      label: '$ Stablecoin · Native Gas',
     },
     {
       symbol: 'EURC',
-      name: 'EUR Coin',
       icon: 'eurc',
       balance: eurcBalance,
+      decimals: eurcDecimals,
       label: '€ Stablecoin',
     },
   ];
@@ -92,11 +107,11 @@ export default function BalanceCard() {
               ) : (
                 <>
                   <div className="balance-amount-value">
-                    {formatBalance(token.balance)}
+                    {formatBalance(token.balance, token.decimals)}
                   </div>
                   <div className="balance-amount-usd">
                     ≈ {token.symbol === 'USDC' ? '$' : '€'}
-                    {formatBalance(token.balance)}
+                    {formatBalance(token.balance, token.decimals)}
                   </div>
                 </>
               )}
