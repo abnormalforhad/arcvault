@@ -31,13 +31,12 @@ async function main() {
   const nftAddr = await nft.getAddress();
   console.log("ArcNFT deployed to:", nftAddr);
 
-  // Summary
   console.log("\n═══════════════════════════════════════");
   console.log("  DEPLOYMENT COMPLETE");
   console.log("═══════════════════════════════════════");
-  console.log(`  VAULT: '${vaultAddr}',`);
-  console.log(`  SWAP:  '${swapAddr}',`);
-  console.log(`  NFT:   '${nftAddr}',`);
+  console.log("  VAULT: '" + vaultAddr + "',");
+  console.log("  SWAP:  '" + swapAddr + "',");
+  console.log("  NFT:   '" + nftAddr + "',");
   console.log("═══════════════════════════════════════");
   console.log("\nUpdate src/config/contracts.js with these addresses!");
 }
