@@ -187,6 +187,161 @@ export const VAULT_ABI = [
 export const CONTRACTS = {
   USDC: '0x3600000000000000000000000000000000000000',
   EURC: '0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a',
-  // ArcVault — update after deploying contracts/ArcVault.sol
+  // Deploy contracts/ and update these:
   VAULT: '0x0000000000000000000000000000000000000000',
+  SWAP: '0x0000000000000000000000000000000000000000',
+  NFT: '0x0000000000000000000000000000000000000000',
 };
+
+// ArcSwap ABI
+export const SWAP_ABI = [
+  {
+    inputs: [{ name: 'amountIn', type: 'uint256' }],
+    name: 'swapUSDCtoEURC',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ name: 'amountIn', type: 'uint256' }],
+    name: 'swapEURCtoUSDC',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { name: 'isUSDCtoEURC', type: 'bool' },
+      { name: 'amountIn', type: 'uint256' },
+    ],
+    name: 'getAmountOut',
+    outputs: [
+      { name: 'amountOut', type: 'uint256' },
+      { name: 'fee', type: 'uint256' },
+    ],
+    stateMutability: 'pure',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'reserves',
+    outputs: [
+      { name: 'usdcReserve', type: 'uint256' },
+      { name: 'eurcReserve', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, name: 'user', type: 'address' },
+      { indexed: true, name: 'fromToken', type: 'address' },
+      { indexed: true, name: 'toToken', type: 'address' },
+      { indexed: false, name: 'amountIn', type: 'uint256' },
+      { indexed: false, name: 'amountOut', type: 'uint256' },
+      { indexed: false, name: 'timestamp', type: 'uint256' },
+    ],
+    name: 'Swapped',
+    type: 'event',
+  },
+];
+
+// ArcNFT ABI
+export const NFT_ABI = [
+  {
+    inputs: [{ name: 'typeId', type: 'uint256' }],
+    name: 'mint',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { name: 'user', type: 'address' },
+      { name: 'typeId', type: 'uint256' },
+    ],
+    name: 'canMint',
+    outputs: [{ name: '', type: 'bool' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ name: 'typeId', type: 'uint256' }],
+    name: 'getTypeInfo',
+    outputs: [
+      { name: 'typeName', type: 'string' },
+      { name: 'description', type: 'string' },
+      { name: 'mintCount', type: 'uint256' },
+      { name: 'maxSupply', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ name: 'user', type: 'address' }],
+    name: 'tokensOfOwner',
+    outputs: [{ name: '', type: 'uint256[]' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ name: 'tokenId', type: 'uint256' }],
+    name: 'tokenType',
+    outputs: [{ name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ name: 'tokenId', type: 'uint256' }],
+    name: 'ownerOf',
+    outputs: [{ name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ name: 'user', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { name: 'user', type: 'address' },
+      { name: 'typeId', type: 'uint256' },
+    ],
+    name: 'hasMinted',
+    outputs: [{ name: '', type: 'bool' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, name: 'minter', type: 'address' },
+      { indexed: true, name: 'tokenId', type: 'uint256' },
+      { indexed: true, name: 'typeId', type: 'uint256' },
+      { indexed: false, name: 'timestamp', type: 'uint256' },
+    ],
+    name: 'Minted',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, name: 'from', type: 'address' },
+      { indexed: true, name: 'to', type: 'address' },
+      { indexed: true, name: 'tokenId', type: 'uint256' },
+    ],
+    name: 'Transfer',
+    type: 'event',
+  },
+];
